@@ -12,6 +12,7 @@ import java.security.InvalidParameterException
 class FreelineInitializer {
 
     public static void initFreeline(Project project) {
+        println "HaKuLess Changed!"
         println "Freeline initial process start..."
         FreelineDownloader.execute(project)
         generateProjectDescription(project)
@@ -153,7 +154,15 @@ class FreelineInitializer {
             def pro = allProjectMap.get(product.name)
             def sourceSets = createSourceSets(pro, product.flavor, product.buildType)
             project_source_sets[pro.name] = sourceSets
-            modules.add(['name': pro.name, 'path': pro.projectDir.absolutePath])
+            // modules.add(['name': pro.name, 'path': pro.projectDir.absolutePath])
+            modules.add(['name': pro.name, 'path': pro.projectDir.absolutePath, 'flavor':product.flavor, 'buildType': product.buildType])
+
+            println("")
+            println(pro.name)
+            println(pro.projectDir.absolutePath)
+            println(product.flavor)
+            println(product.buildType)
+            println("")
         }
 
         def mainAppSourceSets = project_source_sets[project.name];
