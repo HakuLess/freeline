@@ -8,3 +8,7 @@ captures/
 *.pyc
 freeline-sample/
 */.*
+.project
+.settings/
+freeline-databinding-cli/
+freeline-gradle-plugin/
