@@ -21,6 +21,9 @@ class FreelinePlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
+        // Read ProjectDescription
+        project.rootProject.extensions["projectDescription"] = FreelineUtils.readProjectDescription(project.rootProject)
+
         project.extensions.create("freeline", FreelineExtension, project)
 
         if (FreelineUtils.getProperty(project, "disableAutoDependency")) {
@@ -29,8 +32,8 @@ class FreelinePlugin implements Plugin<Project> {
             println "freeline auto add runtime dependencies: ${freelineVersion}"
             project.dependencies {
                 debugCompile "com.antfortune.freeline:runtime:${freelineVersion}"
-                releaseCompile "com.antfortune.freeline:runtime-no-op:${freelineVersion}"
-                testCompile "com.antfortune.freeline:runtime-no-op:${freelineVersion}"
+                // releaseCompile "com.antfortune.freeline:runtime-no-op:${freelineVersion}"
+                // testCompile "com.antfortune.freeline:runtime-no-op:${freelineVersion}"
             }
         }
 
@@ -488,15 +491,27 @@ class FreelinePlugin implements Plugin<Project> {
                             "exploded-aar${File.separator}${p.group}${File.separator}${p.name}${File.separator}",
                             "${p.name}${File.separator}build${File.separator}intermediates${File.separator}bundles${File.separator}"
                     ]
+                    
                     if (type == "resources") {
-                        p.android.sourceSets.main.res.srcDirs.asList().collect(mapper.path) {
-                            it.absolutePath
+                        // p.android.sourceSets.main.res.srcDirs.asList().collect(mapper.path) {
+                        //     println ("hakuless " + it.absolutePath + " ")
+                        //     it.absolutePath
+                        // }
+                        project.rootProject.projectDescription["project_source_sets"][p.name]["main_res_directory"].asList().collect(mapper.path) {
+                            println ("hakuless " + it + " ")
+                            it
                         }
                     } else if (type == "assets") {
-                        p.android.sourceSets.main.assets.srcDirs.asList().collect(mapper.path) {
-                            it.absolutePath
+                        // p.android.sourceSets.main.assets.srcDirs.asList().collect(mapper.path) {
+                        //     println ("hakuless " + it.absolutePath + " ")
+                        //     it.absolutePath
+                        // }
+                        project.rootProject.projectDescription["project_source_sets"][p.name]["main_assets_directory"].asList().collect(mapper.path) {
+                            println ("hakuless " + it + " ")
+                            it
                         }
                     }
+                    
                     mappers.add(mapper)
                 }
             }
@@ -506,10 +521,18 @@ class FreelinePlugin implements Plugin<Project> {
                 project.android.sourceSets.main.res.srcDirs.asList().collect(projectResDirs) {
                     it.absolutePath
                 }
+                // project.rootProject.projectDescription["project_source_sets"][p.name]["main_res_directory"].asList().collect(mapper.path) {
+                //     println ("hakuless " + it + " ")
+                //     it
+                // }
             } else if (type == "assets") {
                 project.android.sourceSets.main.assets.srcDirs.asList().collect(projectResDirs) {
                     it.absolutePath
                 }
+                // project.rootProject.projectDescription["project_source_sets"][p.name]["main_assets_directory"].asList().collect(mapper.path) {
+                //     println ("hakuless " + it + " ")
+                //     it
+                // }
             }
 
             mergeResourcesTask.inputs.files.files.each { f ->
