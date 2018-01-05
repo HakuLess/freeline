@@ -29,7 +29,7 @@ class FreelineDownloader {
         String localPath = FreelineUtils.getProperty(project, PARAM_LOCAL)
         String targetUrl = FreelineUtils.getProperty(project, PARAM_TARGET_URL)
 
-        if (FreelineUtils.isEmpty(cdnUrl)) {
+        if (FreelineUtils.isEmpty(cdnUrl)) { 
             cdnUrl = CDN_URL
         }
 
@@ -112,19 +112,22 @@ class FreelineDownloader {
     }
 
     private static String getDownloadUrl(String cdnUrl, String version, boolean ignoreOs) {
-        if (ignoreOs) {
-            return "${cdnUrl}/${version}/all/freeline.zip"
-        }
+        // 使用自定义路径，已上传github
+        return cdnUrl = "https://raw.githubusercontent.com/HakuLess/freeline/master/freeline.zip"
+        
+        // if (ignoreOs) {
+        //     return "${cdnUrl}/${version}/all/freeline.zip"
+        // }
 
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            return "${cdnUrl}/${version}/win/freeline.zip"
-        } else if (Os.isFamily(Os.FAMILY_MAC)) {
-            return "${cdnUrl}/${version}/mac/freeline.zip"
-        } else if (Os.isFamily(Os.FAMILY_UNIX)) {
-            return "${cdnUrl}/${version}/linux/freeline.zip"
-        } else {
-            throw new GradleException("Unknown system os!!!")
-        }
+        // if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        //     return "${cdnUrl}/${version}/win/freeline.zip"
+        // } else if (Os.isFamily(Os.FAMILY_MAC)) {
+        //     return "${cdnUrl}/${version}/mac/freeline.zip"
+        // } else if (Os.isFamily(Os.FAMILY_UNIX)) {
+        //     return "${cdnUrl}/${version}/linux/freeline.zip"
+        // } else {
+        //     throw new GradleException("Unknown system os!!!")
+        // }
     }
 
     private static String fetchData(Project project, String cdnUrl, boolean mirror) {
