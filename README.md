@@ -1,7 +1,5 @@
 # Freeline
-
 ![Freeline](http://ww4.sinaimg.cn/large/006tNc79gw1f6ooza8pkuj30h804gjrk.jpg)
-
 从Freeline官方fork而来，二次开发增加部分自己需要的功能~
 
 ## ChangeLog
@@ -13,7 +11,10 @@ git clone git@github.com:HakuLess/freeline.git
 cd freeline
 ./gradlew install
 
-do with your own project
+Then do with your own project
+
+cd your own project
+./gradlew initFreeline -Pmirror(Needed for module flavor)
 ````
 
 ## TODO
